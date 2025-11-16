@@ -1,0 +1,22 @@
+@userId = 9cd42778-2046-4604-bda5-b959c415e9d1
+@productId = 6efad664-1974-4f44-aec6-d836017485dd
+@orderId = 7
+
+
+###
+
+GET http://localhost:4000/orders/{{orderId}}
+
+###
+POST http://localhost:4000/orders
+Content-Type: application/json
+
+{
+    "userId": "{{userId}}",
+    "items": [
+        {
+            "productId": "{{productId}}",
+            "qty": 1
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+@accessToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNvZ25pdG9Mb2NhbCJ9.eyJhdXRoX3RpbWUiOjE3NjMyNDg0MjIsImNsaWVudF9pZCI6IjlpdXRqcHplYWg3cW5rb3lrdHN2dHYxNXYiLCJldmVudF9pZCI6ImU4Y2NiOTg5LTQzY2UtNDNhNS1hNmNlLTRiZDQwOGM0OWYzZCIsImlhdCI6MTc2MzI0ODQyMiwianRpIjoiODA3NjE5NTgtMmFkZC00YjkyLTg1YjUtM2ZhNzI4NWQxY2UwIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsInN1YiI6IjljZDQyNzc4LTIwNDYtNDYwNC1iZGE1LWI5NTljNDE1ZTlkMSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInVzZXJuYW1lIjoiOWNkNDI3NzgtMjA0Ni00NjA0LWJkYTUtYjk1OWM0MTVlOWQxIiwiZXhwIjoxNzYzNDY0NDIyLCJpc3MiOiJodHRwOi8vMC4wLjAuMDo5MjI5L2xvY2FsXzZMY0dKcHo2In0.rJwGXQoGxFxfTlZAL8cA-INdwmLd2jvDd7BMQWVi-NtQIJaOg46_zaO4YDmPCeN5ToP81_xGSxtlmtDHpH4MvgqaR0lzpwJTZgooFiz3vz3gkzCWOmm0qzzyyAylyOYXtd_2NFU3tVulz3CHwGD9Mzi5VevZxBtC2z0FWZIrxd71z7lWPiyctV9w_1MEAaU9tTCqoKOmUwXbgy9zBcLUd--SPyVoaTrIcWkhKBp9Ln1Axna9TcMixCjtVHB50H2aHyCo69vwwoDCuKKNF-x-BAxDWu8LmPZB3N-fE6IdaZmqDHKMWom-4zafx0AbMJG57TZzDUt5W8Apsi32XHQ4OA
+@productId = 6efad664-1974-4f44-aec6-d836017485dd
+###
+
+GET http://localhost:4000/products
+
+###
+POST http://localhost:4000/products
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "product 1",
+    "description": "info",
+    "price": 99,
+    "imageUrl": "http://localhost:4566/my-products-bucket/e1903ecd-5ca3-4406-bdf3-7831e011ecc9-foto.jpg"
+}
+
+
+### Subir imagen a S3
+POST http://localhost:4000/products/upload
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="foto.jpg"
+Content-Type: image/jpeg
+
+< ./foto.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
