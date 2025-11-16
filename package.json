@@ -8,7 +8,8 @@
     "start:dev": "ts-node-dev src/index.ts",
     "start:prod": "node dist/index.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "cognito:init": "node cognito-init.js"
   },
   "keywords": [],
   "author": "",

@@ -3,7 +3,6 @@ import productRoutes from './products/product.routes';
 import userRoutes from './users/user.routes';
 import orderRoutes from './orders/order.routes';
 import { envs } from './config/envs';
-import { setupLocalCognito } from './users/cognito.client';
 import { AppDataSource } from './orders/datasource';
 import { createBucketIfNotExists } from './products/s3.client';
 
@@ -14,8 +13,7 @@ app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/auth', userRoutes);
 
-setupLocalCognito();
-createBucketIfNotExists(envs.bucketName);
+createBucketIfNotExists(envs.s3BucketName);
 
 AppDataSource.initialize()
   .then(() => {

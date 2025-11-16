@@ -14,7 +14,7 @@ export const envs = {
   cognitoEndpoint: env.get('COGNITO_ENDPOINT').required().asString(),
   dynamodbEndpoint: env.get('DYNAMODB_ENDPOINT').required().asString(),
   s3Endpoint: env.get('S3_ENDPOINT').required().asString(),
-  bucketName: env.get('BUCKET_NAME').required().asString(),
+  s3BucketName: env.get('S3_BUCKET_NAME').required().asString(),
 
   // Cognito
   cognitoUserPoolId: env.get('COGNITO_USER_POOL_ID').required().asString(),

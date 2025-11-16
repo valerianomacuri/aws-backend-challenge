@@ -6,7 +6,7 @@ import mime from 'mime-types';
 import { envs } from '../config/envs';
 
 const repo = new ProductsRepository();
-const bucketName = envs.bucketName;
+const bucketName = envs.s3BucketName;
 const S3_BASE_URL = `${envs.s3Endpoint}/${bucketName}`; // LocalStack endpoint
 
 export class ProductService {

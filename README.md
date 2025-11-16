@@ -115,10 +115,10 @@ Esto iniciará:
 - ✅ Cognito Local en puerto `9229`
 - ✅ LocalStack en puerto `4566`
 
-### 4️⃣ Verificar servicios
+### 4️⃣ Crear un User Pool y Client App
 
 ```bash
-docker-compose ps
+npm run cognito:init
 ```
 
 Todos los servicios deben estar en estado `Up`.
