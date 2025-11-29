@@ -16,7 +16,7 @@ services:
       - "4566:4566"
       - "4510-4559:4510-4559"
     environment:
-      - SERVICES=dynamodb,s3,rds
+      - SERVICES=dynamodb,s3,lambda
       - DEBUG=1
       - AWS_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=test

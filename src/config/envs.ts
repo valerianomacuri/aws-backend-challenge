@@ -20,5 +20,8 @@ export const envs = {
   cognitoUserPoolId: env.get('COGNITO_USER_POOL_ID').required().asString(),
   cognitoClientId: env.get('COGNITO_CLIENT_ID').required().asString(),
 
+  // Lambda
+  lambdaEndpoint: env.get('LAMBDA_ENDPOINT').required().asString(),
+
   postgresUrl: env.get('POSTGRES_URL').required().asString(),
 };

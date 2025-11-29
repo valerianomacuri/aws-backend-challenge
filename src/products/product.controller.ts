@@ -42,12 +42,12 @@ export class ProductController {
         return res.status(400).json({ message: 'No image file provided' });
       }
 
-      const imageUrl = await productService.uploadImage(
+      const { imageUrl, thumbnailUrl } = await productService.uploadImage(
         req.file.buffer,
         req.file.originalname,
       );
 
-      return res.status(200).json({ imageUrl });
+      return res.status(200).json({ imageUrl, thumbnailUrl });
     } catch (err) {
       console.error(err);
       return res

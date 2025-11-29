@@ -10,6 +10,7 @@ const ProductSchema = new dynamoose.Schema(
     description: String,
     price: Number,
     imageUrl: String,
+    thumbnailUrl: String,
   },
   {
     timestamps: true,
