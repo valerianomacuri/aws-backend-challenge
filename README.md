@@ -1,302 +1,288 @@
-# 🚀 AWS Backend Challenge
+# 🚀 AWS Backend
 
-Backend moderno desarrollado en **TypeScript** que simula servicios AWS localmente para desarrollo rápido y eficiente. Combina servicios SQL y NoSQL con autenticación completa y almacenamiento de archivos.
+Modern backend built with **TypeScript** that simulates AWS services locally for fast, efficient development. It combines SQL and NoSQL services with full authentication, file storage, and image processing via Lambda.
 
 ---
 
-## 📋 Tabla de Contenidos
+## 📋 Table of Contents
 
-- [Características Principales](#-características-principales)
-- [Stack Tecnológico](#-stack-tecnológico)
-- [Requisitos Previos](#-requisitos-previos)
-- [Instalación](#-instalación)
-- [Configuración](#-configuración)
-- [Uso](#-uso)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
 - [API Endpoints](#-api-endpoints)
-- [Testing](#-testing)
+- [Docker Services](#-docker-services)
 - [Troubleshooting](#-troubleshooting)
 
 ---
 
-## ✨ Características Principales
+## ✨ Key Features
 
-- 🔐 **Autenticación JWT** con AWS Cognito simulado
-- 💾 **Dual Database**: PostgreSQL (relacional) + DynamoDB (NoSQL)
-- 📦 **Almacenamiento S3** para gestión de archivos
-- 🐳 **Desarrollo Local Completo** con LocalStack
-- 🔄 **Hot Reload** para desarrollo ágil
-- 📝 **Logging Avanzado** con Winston
-- 🛡️ **Type Safety** con TypeScript
-- ✅ **Code Quality** con ESLint + Prettier
+- 🔐 **JWT Authentication** with AWS Cognito (Cognito Local)
+- 💾 **Dual Database**: PostgreSQL (relational) + DynamoDB (NoSQL)
+- 📦 **S3 Storage** for product images
+- 🖼️ **Image Processing** with AWS Lambda (thumbnail generation)
+- 🐳 **Full Local Development** with LocalStack
+- 🔄 **Hot Reload** for agile development
+- 📝 **Logging** with Winston
+- 🛡️ **Type Safety** with TypeScript
+- ✅ **Code Quality** with ESLint + Prettier
 
 ---
 
-## 🛠 Stack Tecnológico
+## 🛠 Tech Stack
 
 ### **Core Backend**
-| Tecnología      | Propósito                     | Versión |
+| Technology      | Purpose                       | Version |
 | --------------- | ----------------------------- | ------- |
-| **Node.js**     | Runtime JavaScript/TypeScript | Latest  |
-| **TypeScript**  | Tipado estático               | ^5.x    |
-| **Express**     | Framework web RESTful         | ^4.x    |
-| **ts-node-dev** | Hot reload durante desarrollo | ^2.x    |
+| **Node.js**     | JavaScript/TypeScript runtime | ≥ 18.x  |
+| **TypeScript**  | Static typing                 | ^5.x    |
+| **Express**     | RESTful web framework         | ^5.x    |
+| **ts-node-dev** | Hot reload during development | ^2.x    |
 
-### **Bases de Datos**
-| Servicio       | Tipo            | ORM/ODM   |
+### **Databases**
+| Service        | Type            | ORM/ODM   |
 | -------------- | --------------- | --------- |
-| **PostgreSQL** | SQL Relacional  | TypeORM   |
+| **PostgreSQL** | Relational SQL  | TypeORM   |
 | **DynamoDB**   | NoSQL Key-Value | Dynamoose |
 
-### **Servicios AWS (Simulados)**
-| Servicio     | Propósito                  | Herramienta Local |
-| ------------ | -------------------------- | ----------------- |
-| **Cognito**  | Autenticación/Autorización | Cognito Local     |
-| **DynamoDB** | Base de datos NoSQL        | LocalStack        |
-| **S3**       | Almacenamiento de archivos | LocalStack        |
-| **RDS**      | Base de datos relacional   | LocalStack        |
+### **AWS Services (Simulated)**
+| Service      | Purpose                    | Local Tool    |
+| ------------ | -------------------------- | ------------- |
+| **Cognito**  | Authentication/Authorization | Cognito Local |
+| **DynamoDB** | NoSQL database             | LocalStack    |
+| **S3**       | File storage               | LocalStack    |
+| **Lambda**   | Image resizing             | LocalStack    |
 
-### **Seguridad & Autenticación**
-- `bcryptjs` → Encriptación de contraseñas
-- `jsonwebtoken` → Manejo de JWT
-- `jwks-rsa` → Validación de tokens
-- `@aws-sdk/client-cognito-identity-provider` → Cliente Cognito
+### **Security & Authentication**
+- `jsonwebtoken` → JWT handling
+- `jwks-rsa` / `jwk-to-pem` → Cognito token validation
+- `bcryptjs` → Password encryption
+- `@aws-sdk/client-cognito-identity-provider` → Cognito client
 
-### **Utilidades**
-- `winston` → Sistema de logging robusto
-- `multer` → Upload de archivos multipart
-- `axios` → Cliente HTTP
-- `uuid` → Generación de IDs únicos
-- `dotenv` → Variables de entorno
+### **Utilities**
+- `winston` → Logging system
+- `multer` → Multipart file uploads
+- `sharp` → Image processing
+- `axios` → HTTP client
+- `uuid` → Unique ID generation
+- `env-var` + `dotenv` → Typed environment variables
 
-### **Desarrollo**
-- `ESLint` + `Prettier` → Linting y formateo
-- `typescript-eslint` → Reglas ESLint para TS
-- `cross-env` → Variables de entorno cross-platform
+### **Development**
+- `ESLint` + `Prettier` → Linting and formatting
+- `typescript-eslint` → ESLint rules for TS
+- `cross-env` → Cross-platform environment variables
 
 ---
 
-## 📦 Requisitos Previos
+## 📦 Prerequisites
 
-Asegúrate de tener instalado:
+Make sure you have installed:
 
 - **Node.js** ≥ 18.x
-- **npm** ≥ 9.x o **yarn** ≥ 1.22
+- **npm** ≥ 9.x
 - **Docker** ≥ 20.x
 - **Docker Compose** ≥ 2.x
 
 ---
 
-## 🔧 Instalación
+## 🔧 Installation
 
-### 1️⃣ Clonar el repositorio
+### 1️⃣ Clone the repository
 
 ```bash
 git clone <repository-url>
-cd aws-backend-challenge
+cd aws-backend
 ```
 
-### 2️⃣ Instalar dependencias
+### 2️⃣ Install dependencies
 
 ```bash
 npm install
-# o
-yarn install
 ```
 
-### 3️⃣ Levantar servicios Docker
+### 3️⃣ Start Docker services
 
 ```bash
 docker-compose up -d
 ```
 
-Esto iniciará:
-- ✅ PostgreSQL en puerto `5432`
-- ✅ Cognito Local en puerto `9229`
-- ✅ LocalStack en puerto `4566`
+This will start:
+- ✅ PostgreSQL on port `5432`
+- ✅ Cognito Local on port `9229`
+- ✅ LocalStack on port `4566` (DynamoDB, S3, Lambda)
 
-### 4️⃣ Crear un User Pool y Client App
+### 4️⃣ Create the Cognito User Pool and Client App
 
 ```bash
 npm run cognito:init
 ```
 
-Todos los servicios deben estar en estado `Up`.
+This script creates a User Pool, an App Client, and a test user
+(`test@example.com` / `Test1234`). Copy the `Pool ID` and `Client ID`
+shown in the console into your `.env` file.
 
 ---
 
-## ⚙️ Configuración
+## ⚙️ Configuration
 
-### Variables de Entorno
+### Environment Variables
 
-Crea un archivo `.env` en la raíz del proyecto:
+Create a `.env` file in the project root (you can start from `.env.example`):
 
 ```env
-# Server
+# Application
 NODE_ENV=development
-PORT=3000
+PORT=4000
 
-# AWS Local
+# AWS Global
 AWS_REGION=us-east-1
 AWS_ACCESS_KEY_ID=test
 AWS_SECRET_ACCESS_KEY=test
-LOCALSTACK_ENDPOINT=http://localhost:4566
-COGNITO_ENDPOINT=http://localhost:9229
 
-# PostgreSQL
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-DB_DATABASE=ordersdb
+# Cognito
+COGNITO_USER_POOL_ID=local_xxxxxxxx
+COGNITO_CLIENT_ID=xxxxxxxxxxxxx
+COGNITO_ENDPOINT=http://localhost:9229
 
 # DynamoDB
 DYNAMODB_ENDPOINT=http://localhost:4566
-DYNAMODB_TABLE_PRODUCTS=Products
+DYNAMODB_TABLE_NAME=orders
 
 # S3
-S3_BUCKET_NAME=my-app-bucket
 S3_ENDPOINT=http://localhost:4566
+S3_BUCKET_NAME=my-products-bucket
 
-# Cognito
-COGNITO_USER_POOL_ID=us-east-1_xxxxx
-COGNITO_CLIENT_ID=xxxxxxxxxxxxx
+# Lambda
+LAMBDA_ENDPOINT=http://localhost:4566
+
+# PostgreSQL
+POSTGRES_URL=postgres://postgres:postgres@localhost:5432/ordersdb
 ```
 
 ---
 
-## 🚀 Uso
+## 🚀 Usage
 
-### Scripts Disponibles
+### Available Scripts
 
-| Comando              | Descripción                     |
-| -------------------- | ------------------------------- |
-| `npm run build`      | Compila TypeScript → JavaScript |
-| `npm start`          | Ejecuta servidor TypeScript     |
-| `npm run start:dev`  | Desarrollo con hot reload ⚡     |
-| `npm run start:prod` | Producción (código compilado)   |
-| `npm run lint`       | Analiza código con ESLint       |
-| `npm run lint:fix`   | Auto-corrige issues de ESLint   |
+| Command                | Description                        |
+| ---------------------- | ---------------------------------- |
+| `npm run build`        | Compiles TypeScript → JavaScript   |
+| `npm start`            | Runs the server with ts-node       |
+| `npm run start:dev`    | Development with hot reload ⚡       |
+| `npm run start:prod`   | Production (compiled code)         |
+| `npm run cognito:init` | Initializes the Cognito User Pool  |
+| `npm run lint`         | Analyzes code with ESLint          |
+| `npm run lint:fix`     | Auto-fixes ESLint issues           |
 
-### Desarrollo Local
+### Local Development
 
 ```bash
-# Iniciar en modo desarrollo
 npm run start:dev
 ```
 
-El servidor estará disponible en `http://localhost:3000`
+The server will be available at `http://localhost:4000` (per `PORT`).
 
-### Producción
+### Production
 
 ```bash
-# Compilar
 npm run build
-
-# Ejecutar
 npm run start:prod
 ```
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
-aws-backend-challenge/
+aws-backend/
 ├── src/
-│   ├── config/              # Configuraciones (DB, AWS, etc.)
-│   ├── middlewares/         # Middlewares Express
-│   ├── modules/
-│   │   ├── products/        # Módulo de productos
-│   │   │   ├── controllers/
-│   │   │   ├── services/
-│   │   │   ├── models/
-│   │   │   └── routes/
-│   │   └── orders/          # Módulo de órdenes
-│   │       ├── controllers/
-│   │       ├── services/
-│   │       ├── entities/    # Entidades TypeORM
-│   │       └── routes/
-│   ├── utils/               # Utilidades y helpers
-│   ├── types/               # Tipos TypeScript
-│   └── index.ts             # Punto de entrada
-├── cognito-init/            # Scripts inicialización Cognito
-├── dist/                    # Código compilado (generado)
-├── docker-compose.yml       # Servicios Docker
-├── .env                     # Variables de entorno
-├── .env.example             # Template de variables
+│   ├── config/
+│   │   └── envs.ts              # Typed environment variables
+│   ├── shared/
+│   │   └── auth.middleware.ts   # JWT authentication middleware
+│   ├── users/                   # Users / Cognito module
+│   │   ├── auth.service.ts
+│   │   ├── cognito.client.ts
+│   │   ├── user.controller.ts
+│   │   ├── user.entity.ts
+│   │   └── user.routes.ts
+│   ├── products/                # Products module (DynamoDB + S3)
+│   │   ├── dynamoose.ts
+│   │   ├── product.model.ts
+│   │   ├── product.repository.ts
+│   │   ├── product.service.ts
+│   │   ├── product.controller.ts
+│   │   ├── product.routes.ts
+│   │   └── s3.client.ts
+│   ├── orders/                  # Orders module (PostgreSQL)
+│   │   ├── datasource.ts
+│   │   ├── order.entity.ts
+│   │   ├── order.service.ts
+│   │   ├── order.controller.ts
+│   │   └── order.routes.ts
+│   ├── lambda/
+│   │   └── lambda.client.ts     # Lambda client for image resizing
+│   └── index.ts                 # Entry point
+├── cognito-init.js              # Cognito initialization script
+├── docker-compose.yml           # Docker services
+├── .env.example                 # Environment variables template
 ├── package.json
-├── tsconfig.json            # Config TypeScript
-├── .eslintrc.js            # Config ESLint
-└── .prettierrc             # Config Prettier
+└── tsconfig.json
 ```
 
 ---
 
 ## 🔌 API Endpoints
 
-### Autenticación
+### Authentication (`/auth`)
 
 ```http
-POST   /api/auth/register    # Registrar usuario
-POST   /api/auth/login       # Iniciar sesión
-POST   /api/auth/refresh     # Refrescar token
+POST   /auth/register    # Register a user in Cognito
+POST   /auth/login       # Log in (returns tokens)
+GET    /auth/profile     # Authenticated user's profile 🔒
 ```
 
-### Productos (DynamoDB)
+### Products (`/products`)
 
 ```http
-GET    /api/products         # Listar productos
-GET    /api/products/:id     # Obtener producto
-POST   /api/products         # Crear producto
-PUT    /api/products/:id     # Actualizar producto
-DELETE /api/products/:id     # Eliminar producto
+GET    /products         # List products (DynamoDB)
+GET    /products/:id     # Get product by ID
+POST   /products/upload  # Upload image to S3 + thumbnail via Lambda 🔒
+POST   /products         # Create product 🔒
 ```
 
-### Órdenes (PostgreSQL)
+### Orders (`/orders`)
 
 ```http
-GET    /api/orders           # Listar órdenes
-GET    /api/orders/:id       # Obtener orden
-POST   /api/orders           # Crear orden
-PUT    /api/orders/:id       # Actualizar orden
-DELETE /api/orders/:id       # Eliminar orden
+POST   /orders           # Create order (PostgreSQL)
+GET    /orders/:id       # Get order by ID
 ```
 
-### Archivos (S3)
-
-```http
-POST   /api/files/upload     # Subir archivo
-GET    /api/files/:key       # Descargar archivo
-DELETE /api/files/:key       # Eliminar archivo
-```
+> 🔒 = Requires a valid JWT token in the `Authorization: Bearer <token>` header.
 
 ---
 
-## 🐳 Servicios Docker
+## 🐳 Docker Services
 
-### Configuración Docker Compose
+### Docker Compose Configuration
 
 ```yaml
 services:
-  # Cognito Local - Autenticación
   cognito-local:
     image: jagregory/cognito-local
     ports: ["9229:9229"]
-    environment:
-      AWS_REGION: us-east-1
-    volumes:
-      - ./cognito-init:/docker-entrypoint-init.d
 
-  # LocalStack - Servicios AWS
   localstack:
     image: localstack/localstack:3
-    ports: ["4566:4566"]
+    ports: ["4566:4566", "4510-4559:4510-4559"]
     environment:
-      SERVICES: dynamodb,s3,rds
-      DEBUG: 1
+      SERVICES: dynamodb,s3,lambda
 
-  # PostgreSQL - Base de datos
   postgres:
     image: postgres:15
     ports: ["5432:5432"]
@@ -306,78 +292,64 @@ services:
       POSTGRES_PASSWORD: postgres
 ```
 
-### Comandos Útiles
+### Useful Commands
 
 ```bash
-# Ver logs
-docker-compose logs -f [servicio]
+# View logs
+docker-compose logs -f [service]
 
-# Reiniciar servicio
-docker-compose restart [servicio]
+# Restart a service
+docker-compose restart [service]
 
-# Detener todos
+# Stop all
 docker-compose down
 
-# Limpiar volúmenes
+# Clean volumes
 docker-compose down -v
-```
-
----
-
-## 🧪 Testing
-
-```bash
-# Ejecutar tests (cuando estén configurados)
-npm test
-
-# Tests con coverage
-npm run test:coverage
-
-# Tests en modo watch
-npm run test:watch
 ```
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Problema: Puerto en uso
+### Issue: Port in use
 
 ```bash
-# Encuentra el proceso usando el puerto
-lsof -ti:3000 | xargs kill -9  # Mac/Linux
-netstat -ano | findstr :3000   # Windows
+# Windows
+netstat -ano | findstr :4000
+
+# Mac/Linux
+lsof -ti:4000 | xargs kill -9
 ```
 
-### Problema: Docker no inicia
+### Issue: Docker won't start
 
 ```bash
-# Reiniciar Docker
 docker-compose down
 docker-compose up -d --force-recreate
 ```
 
-### Problema: Error de conexión a PostgreSQL
+### Issue: PostgreSQL connection error
 
-- Verifica que el contenedor esté corriendo: `docker ps`
-- Revisa las credenciales en `.env`
-- Intenta reconectar: `docker-compose restart postgres`
+- Verify the container is running: `docker ps`
+- Check the `POSTGRES_URL` variable in `.env`
+- Restart the service: `docker-compose restart postgres`
 
-### Problema: LocalStack no responde
+### Issue: LocalStack not responding
 
 ```bash
-# Verificar estado
+# Check status
 curl http://localhost:4566/_localstack/health
 
-# Ver logs
+# View logs
 docker-compose logs localstack
 ```
 
 ---
 
-## 📚 Recursos Adicionales
+## 📚 Additional Resources
 
-- [Documentación TypeScript](https://www.typescriptlang.org/docs/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Express.js Guide](https://expressjs.com/en/guide/routing.html)
 - [LocalStack Docs](https://docs.localstack.cloud/)
 - [TypeORM Documentation](https://typeorm.io/)
@@ -385,28 +357,6 @@ docker-compose logs localstack
 
 ---
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la licencia MIT.
-
----
-
-## 👥 Contribuciones
-
-Las contribuciones son bienvenidas. Por favor:
-
-1. Fork el proyecto
-2. Crea una rama (`git checkout -b feature/amazing-feature`)
-3. Commit tus cambios (`git commit -m 'Add amazing feature'`)
-4. Push a la rama (`git push origin feature/amazing-feature`)
-5. Abre un Pull Request
-
----
-
-## 📧 Contacto
-
-Para preguntas o sugerencias, abre un issue en el repositorio.
-
----
-
-**¡Hecho con ❤️ y TypeScript!**
+This project is licensed under the ISC license.
